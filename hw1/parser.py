@@ -174,14 +174,21 @@ if __name__ == "__main__":
     )
     logger = logging.getLogger()
 
+    LIMIT_HUB_COUNT = 100
+    LIMIT_HUB_SIZE = 15
+
     corpus = []
     hubs_links = parse_hub_links(logger)
 
-    for hub_url in hubs_links:
+    words_count = 0
+    for hub_url in hubs_links[:LIMIT_HUB_COUNT]:
         hub_name = parse_hub_title(hub_url, logger)
         articles_links = parse_hub_articles(hub_url, logger)
 
-        for article_url in articles_links:
+        print(f"[INFO] Parsing articles for hub: {hub_name}")
+        logger.info(f"Parsing articles for hub: {hub_name}")
+
+        for article_url in articles_links[:LIMIT_HUB_SIZE]:
             article_title, article_text = None, None
             article_content = parse_article_content(article_url, logger)
             if article_content:
@@ -198,8 +205,13 @@ if __name__ == "__main__":
                     "text": article_text,
                 }
             )
-            print(f"[INFO] Parsed {len(corpus)} articles so far")
-            logger.info(f"Parsed {len(corpus)} articles so far")
+            words_count += len(article_text.split())
+            print(
+                f"[INFO] Parsed {len(corpus)} articles so far, total words count: {words_count}"
+            )
+            logger.info(
+                f"Parsed {len(corpus)} articles so far, total words count: {words_count}"
+            )
 
         with open("corpus.json", "w") as f:
             json.dump(corpus, f)

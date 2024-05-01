@@ -164,3 +164,4 @@ hw1/habr_parser.log
 *.json
 *.pickle
 *.pkl
+*.bin

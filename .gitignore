@@ -165,3 +165,4 @@ hw1/habr_parser.log
 *.pickle
 *.pkl
 *.bin
+.DS_Store

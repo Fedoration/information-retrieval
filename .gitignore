@@ -160,3 +160,7 @@ cython_debug/
 #.idea/
 hw1/corpus.json
 hw1/habr_parser.log
+
+*.json
+*.pickle
+*.pkl
